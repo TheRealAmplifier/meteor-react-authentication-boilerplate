@@ -1,8 +1,15 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router';
 
 class SignUp extends Component {
 	render() {
-		return <p>Sign up template</p>;
+		return (
+			<div>
+				<h1>Sign Up</h1>
+				{/* login form */}
+				<Link to="/login">Login</Link>
+			</div>
+		);
 	}
 };
 
