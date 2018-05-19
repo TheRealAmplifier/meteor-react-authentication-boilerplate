@@ -1,22 +1,27 @@
-import { Template } from 'meteor/templating';
-import { ReactiveVar } from 'meteor/reactive-var';
+import { Meteor } from 'meteor/meteor';
 
-import './main.html';
+import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 
-Template.hello.onCreated(function helloOnCreated() {
-  // counter starts at 0
-  this.counter = new ReactiveVar(0);
-});
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'; 
+import createBrowserHistory from 'history/createBrowserHistory';
 
-Template.hello.helpers({
-  counter() {
-    return Template.instance().counter.get();
-  },
-});
+import NotFound from '../imports/ui/notfound';
+import SignUp from '../imports/ui/signup';
+import Login from '../imports/ui/login';
 
-Template.hello.events({
-  'click button'(event, instance) {
-    // increment the counter when button is clicked
-    instance.counter.set(instance.counter.get() + 1);
-  },
+
+const routes = (
+  <Router>
+    <Switch>
+      <Route exact path="/" component={SignUp} />
+      <Route exact path="/login" component={Login} />
+      <Route exact path="/signup" component={SignUp} />
+      <Route exact path="*" component={NotFound} />
+    </Switch>
+  </Router>
+)
+
+Meteor.startup(() => {
+  ReactDOM.render( routes, document.getElementById('AuthApp') );
 });
