@@ -18,7 +18,11 @@ class Login extends Component {
 		let password = this.refs.password.value.trim();
 
 		Meteor.loginWithPassword({email}, password, (err) => {
-			console.log('Login callback', err);
+			if( !err ) {
+				this.setState({error: ''});
+			} else {
+				this.setState({error: 'Unable to login. Please try again'});
+			}
 		});
 	}
 	render() {
@@ -28,7 +32,7 @@ class Login extends Component {
 
 				{ this.state.error ? <p>{this.state.error}</p> : undefined }
 
-				<form onSubmit={this.onFormSubmit.bind(this)}>
+				<form onSubmit={this.onFormSubmit.bind(this)} noValidate>
 					<fieldset>
 						<label htmlFor="email">Email address</label>
 						<input type="email"ref="email" name="email" />

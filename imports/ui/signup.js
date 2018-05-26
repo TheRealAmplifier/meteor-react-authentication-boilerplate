@@ -16,8 +16,16 @@ class SignUp extends Component {
 		let email = this.refs.email.value.trim();
 		let password = this.refs.password.value.trim();
 
+		if( password < 8) {
+			return this.setState({error: 'Password must be more than 8 characters'});
+		}
+
 		Accounts.createUser( { email, password }, ( err ) => {
-			console.log('Signup callback', err);
+			if( !err ) {
+				this.setState({error: ''});
+			} else {
+				this.setState({error: err.reason});
+			}
 		});
 	}
  	render() {
@@ -27,7 +35,7 @@ class SignUp extends Component {
 
 				{ this.state.error ? <p>{this.state.error}</p> : undefined }
 
-				<form onSubmit={this.onFormSubmit.bind(this)}>
+				<form onSubmit={this.onFormSubmit.bind(this)} noValidate>
 					<fieldset>
 						<label htmlFor="email">Email address</label>
 						<input type="email"ref="email" name="email" />
