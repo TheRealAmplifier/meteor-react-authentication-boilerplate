@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 class Application extends Component {
 	onLogout() {
-		Meteor.logout();
+		Accounts.logout();
 	}
 	render() {
 		return (

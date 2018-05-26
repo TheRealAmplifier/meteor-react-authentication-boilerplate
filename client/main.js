@@ -11,28 +11,38 @@ import SignUp from '../imports/ui/signup';
 import Login from '../imports/ui/login';
 import Application from '../imports/ui/application';
 
-const unauthenticatedPages = ['/', '/signup'];
+const unauthenticatedPages = ['/', '/login', '/signup'];
 const authenticatedPages = ['/application'];
+const onEnterPublicPage = () => {
+  if ( Meteor.userId() ) {
+    browserHistory.replace('/application');
+  }
+};
+const onEnterPrivatePage = () => {
+  if ( !Meteor.userId() ) {
+    browserHistory.replace('/');
+  }
+}
 const routes = (
-  <Router history={ browserHistory }>
-    <Route exact path="/" component={SignUp} />
+  <Router history={browserHistory}>
+    <Route exact path="/" component={Login} onEnter={onEnterPublicPage} />
+    <Route path="/signup" component={SignUp} onEnter={onEnterPublicPage} />
+    <Route path="/application" component={Application} onEnter={onEnterPrivatePage}/>
     <Route path="/login" component={Login} />
-    <Route path="/signup" component={SignUp} />
-    <Route path="/application" component={Application} />
     <Route path="*" component={NotFound} />
   </Router>
 );
 
 Tracker.autorun(() => {
-  const isValidated = !!Meteor.userId();
-  const pathName = browserHistory.getCurrentLocation().pathname;
-  const isUnauthenticatedPage = unauthenticatedPages.includes(pathName);
-  const isAuthenticatedPage = authenticatedPages.includes(pathName);
+  const isAuthenticated = !!Meteor.userId();
+  const pathname = browserHistory.getCurrentLocation().pathname;
+  const isUnauthenticatedPage = unauthenticatedPages.includes(pathname);
+  const isAuthenticatedPage = authenticatedPages.includes(pathname);
 
-  if ( isAuthenticatedPage && isValidated ) {
-    browserHistory.push('/application');
-  } else if ( isAuthenticatedPage && !isValidated ) {
-    browserHistory.push('/');
+  if (isUnauthenticatedPage && isAuthenticated) {
+    browserHistory.replace('/application');
+  } else if (isAuthenticatedPage && !isAuthenticated) {
+    browserHistory.replace('/');
   }
 });
 
