@@ -4,13 +4,69 @@ body {
 	width: 100%;
 	height: 100vh;
 	overflow: hidden;
-}
-div#customerPortal {
 	text-align: center;
-	font-size: 18px;
 	font-family: monospace;
-	color: #222222;
-	position: relative;
-	top: 50%;
-	transform: translateY(-50%);
+}
+
+div#AuthApp {
+	position: absolute;
+	min-width: 350px;
+  top: 50%;
+  left: 50%;
+	transform: translate(-50%, -50%);
+	padding: 20px;
+	background: #f4f4f4;
+	box-shadow: 0 0 10px 0  rgba(0, 0, 0 ,.4);
+}
+div#AuthApp h1 {
+	margin: 0 0 20px;
+	font-family: monospace;
+}
+form fieldset {
+  border: 0;
+	padding: 0;
+	margin-bottom: 20px;
+}
+form fieldset label,
+form fieldset input {
+  display: block;
+	float: left;
+	width: 100%;
+	text-align: left;
+	font-family: monospace;
+}
+form fieldset label {
+	margin-bottom: 5px;
+}
+form fieldset input {
+	height: 35px;
+	line-height: 35px;
+	border: 0;
+	padding: 0 10px;
+	box-sizing: border-box;
+}
+
+form button, 
+form a {
+	float: left;
+}
+form button {
+	padding: 0 30px;
+	height: 35px;
+	line-height: 35px;
+	border: 0;
+	border-radius: 0;
+	appearance: none;
+	background: slategray;
+	color: #ffffff;
+	font-family: monospace;
+	font-size: inherit;
+	letter-spacing: .5px;
+	text-transform: uppercase;
+}
+a {
+	float: right;
+	color: slategray;
+	text-decoration: none;
+	line-height: 35px;
 }
